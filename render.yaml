@@ -36,7 +36,7 @@ services:
       - key: DB_USERNAME
         fromDatabase:
           name: laravel-db
-          property: username
+          property: user
       - key: DB_PASSWORD
         fromDatabase:
           name: laravel-db

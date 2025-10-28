@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: laravel-app
+    env: docker
+    region: oregon
+    plan: free
+    branch: main
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: APP_NAME
+        value: Laravel
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        generateValue: true  # Render tự tạo URL
+      - key: APP_KEY
+        generateValue: true  # Tạo key tự động nếu chưa có
+      - key: DB_CONNECTION
+        value: pgsql
+      # TỰ ĐỘNG KẾT NỐI DATABASE
+      - key: DB_HOST
+        fromDatabase:
+          name: laravel-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: laravel-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: laravel-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: laravel-db
+          property: username
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: laravel-db
+          property: password

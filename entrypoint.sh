@@ -16,15 +16,15 @@ php artisan key:generate --force --no-interaction
 if [ -n "$DB_HOST" ]; then
   echo "Đang chờ database ${DB_HOST}:${DB_PORT:-3306}..."
   TRIES=0
-  MAX_TRIES=15
+  MAX_TRIES=10
   until nc -z ${DB_HOST} ${DB_PORT:-3306} 2>/dev/null; do
     TRIES=$((TRIES + 1))
     if [ $TRIES -ge $MAX_TRIES ]; then
-      echo "Không kết nối được DB sau ${MAX_TRIES} lần thử. Bỏ qua, tiếp tục khởi động..."
+      echo "⚠ Không kết nối được DB sau ${MAX_TRIES} lần. Bỏ qua DB, tiếp tục khởi động app..."
       break
     fi
-    echo "Chưa kết nối được DB... thử lại ($TRIES/$MAX_TRIES)"
-    sleep 2
+    echo "Chờ DB... ($TRIES/$MAX_TRIES)"
+    sleep 1
   done
 
   if nc -z ${DB_HOST} ${DB_PORT:-3306} 2>/dev/null; then
